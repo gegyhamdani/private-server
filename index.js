@@ -86,6 +86,6 @@ app.get("/laporan/user/:id", getUserLaporan)
 app.put("/laporan/:id", updateLaporan);
 app.delete("/laporan/:id", deleteLaporan);
 
-app.listen(5000, () => {
-  console.log("Server has started on port 5000");
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
