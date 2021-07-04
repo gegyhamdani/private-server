@@ -32,6 +32,7 @@ const {
   createFieldstaff,
   getAllFieldstaff,
   getFieldstaff,
+  getFieldstaffKantah,
   updateFieldstaff,
   deleteFieldstaff,
 } = require("./handlers/fieldstaff");
@@ -48,6 +49,7 @@ const {
   createLaporan,
   getAllLaporan,
   getLaporan,
+  getUserLaporan,
   updateLaporan,
   deleteLaporan,
 } = require("./handlers/laporan");
@@ -67,6 +69,7 @@ app.delete("/kantah/:id", deleteKantah);
 app.post("/fieldstaff", createFieldstaff);
 app.get("/fieldstaff", getAllFieldstaff);
 app.get("/fieldstaff/:id", getFieldstaff);
+app.get("/fieldstaff/kantah/:id", getFieldstaffKantah);
 app.put("/fieldstaff/:id", updateFieldstaff);
 app.delete("/fieldstaff/:id", deleteFieldstaff);
 
@@ -79,6 +82,7 @@ app.delete("/location/:id", deleteLocation);
 app.post("/laporan", createLaporan);
 app.get("/laporan", getAllLaporan);
 app.get("/laporan/:id", getLaporan);
+app.get("/laporan/user/:id", getUserLaporan)
 app.put("/laporan/:id", updateLaporan);
 app.delete("/laporan/:id", deleteLaporan);
 

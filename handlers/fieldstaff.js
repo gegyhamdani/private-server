@@ -57,6 +57,23 @@ exports.getFieldstaff = async (req, res) => {
   }
 };
 
+exports.getFieldstaffKantah = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const fieldstaff = await pool.query(
+      "SELECT * FROM fieldstaff WHERE id_kantah = $1",
+      [id]
+    );
+
+    res.json(fieldstaff.rows);
+  } catch (err) {
+    res.status(500).send({
+      error: 500,
+      message: err,
+    });
+  }
+};
+
 exports.updateFieldstaff = async (req, res) => {
   try {
     const { id } = req.params;

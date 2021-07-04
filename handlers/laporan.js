@@ -65,13 +65,30 @@ exports.getLaporan = async (req, res) => {
   }
 };
 
+exports.getUserLaporan = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const laporan = await pool.query("SELECT * FROM laporan WHERE id_fieldstaff = $1", [
+      id,
+    ]);
+
+    res.json(laporan.rows);
+  } catch (err) {
+    res.status(500).send({
+      error: 500,
+      message: err,
+    });
+  }
+};
+
 exports.updateLaporan = async (req, res) => {
   try {
     const { id } = req.params;
-    const { kegiatan, keterangan, foto, lokasi, keluhan, saran } = req.body;
+    const { kegiatan, keterangan, lokasi, keluhan, saran } = req.body;
+    console.log({id, kegiatan, keterangan, lokasi, keluhan, saran})
     const updateLaporan = await pool.query(
-      "UPDATE fieldstaff SET kegiatan = $1, keterangan = $2, foto = $3, lokasi = $4, keluhan = $5, saran = $6, WHERE id = $7",
-      [kegiatan, keterangan, foto, lokasi, keluhan, saran, id]
+      "UPDATE laporan SET kegiatan = $1, keterangan = $2, lokasi = $3, keluhan = $4, saran = $5 WHERE id = $6",
+      [kegiatan, keterangan, lokasi, keluhan, saran, id]
     );
 
     res.json("Laporan Was Updated");
