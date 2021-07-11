@@ -6,22 +6,22 @@ exports.createLaporan = async (req, res) => {
       fieldstaff_name,
       tanggal_laporan,
       kegiatan,
+      tahapan,
       keterangan,
       foto,
-      lokasi,
       keluhan,
       saran,
       id_fieldstaff,
     } = req.body;
     const newLaporan = await pool.query(
-      "INSERT INTO laporan(fieldstaff_name, tanggal_laporan, kegiatan, keterangan,  foto, lokasi, keluhan, saran, id_fieldstaff) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+      "INSERT INTO laporan(fieldstaff_name, tanggal_laporan, kegiatan, tahapan, keterangan, foto, keluhan, saran, id_fieldstaff) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
       [
         fieldstaff_name,
         tanggal_laporan,
         kegiatan,
         keterangan,
+        tahapan,
         foto,
-        lokasi,
         keluhan,
         saran,
         id_fieldstaff,
@@ -68,9 +68,10 @@ exports.getLaporan = async (req, res) => {
 exports.getUserLaporan = async (req, res) => {
   try {
     const { id } = req.params;
-    const laporan = await pool.query("SELECT * FROM laporan WHERE id_fieldstaff = $1", [
-      id,
-    ]);
+    const laporan = await pool.query(
+      "SELECT * FROM laporan WHERE id_fieldstaff = $1",
+      [id]
+    );
 
     res.json(laporan.rows);
   } catch (err) {
@@ -84,11 +85,10 @@ exports.getUserLaporan = async (req, res) => {
 exports.updateLaporan = async (req, res) => {
   try {
     const { id } = req.params;
-    const { kegiatan, keterangan, lokasi, keluhan, saran } = req.body;
-    console.log({id, kegiatan, keterangan, lokasi, keluhan, saran})
+    const { kegiatan, keterangan, tahapan, keluhan, saran } = req.body;
     const updateLaporan = await pool.query(
-      "UPDATE laporan SET kegiatan = $1, keterangan = $2, lokasi = $3, keluhan = $4, saran = $5 WHERE id = $6",
-      [kegiatan, keterangan, lokasi, keluhan, saran, id]
+      "UPDATE laporan SET kegiatan = $1, keterangan = $2, tahapan = $3, keluhan = $4, saran = $5 WHERE id = $6",
+      [kegiatan, keterangan, tahapan, keluhan, saran, id]
     );
 
     res.json("Laporan Was Updated");

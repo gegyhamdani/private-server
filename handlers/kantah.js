@@ -2,8 +2,7 @@ const pool = require("../db");
 
 exports.createKantah = async (req, res) => {
   try {
-    const { name, date_born, location, username, password, level, id_kanwil } =
-      req.body;
+    const { name, username, password, level, id_kanwil } = req.body;
     const selectedKantah = await pool.query(
       "SELECT * FROM kantah WHERE username = $1",
       [username]
@@ -15,8 +14,8 @@ exports.createKantah = async (req, res) => {
       });
     }
     const newKantah = await pool.query(
-      "INSERT INTO kantah(name, date_born, location, username, password, level, id_kanwil) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [name, date_born, location, username, password, level, id_kanwil]
+      "INSERT INTO kantah(name, username, password, level, id_kanwil) VALUES($1, $2, $3, $4, $5) RETURNING *",
+      [name, username, password, level, id_kanwil]
     );
 
     res.json(newKantah.rows[0]);
@@ -57,10 +56,10 @@ exports.getKantah = async (req, res) => {
 exports.updateKantah = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, date_born, location, username } = req.body;
+    const { name, username } = req.body;
     const updateKantah = await pool.query(
-      "UPDATE kantah SET name = $1, date_born = $2, location = $3, username = $4, WHERE id = $5",
-      [name, date_born, location, username, id]
+      "UPDATE kantah SET name = $1, username = $2, WHERE id = $3",
+      [name, username, id]
     );
 
     res.json("Kantah Was Updated");

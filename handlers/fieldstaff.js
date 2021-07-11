@@ -2,7 +2,7 @@ const pool = require("../db");
 
 exports.createFieldstaff = async (req, res) => {
   try {
-    const { name, date_born, location, username, password, level, id_kantah } =
+    const { name, date_born, alamat, username, password, level, id_kantah } =
       req.body;
     const selectedFieldstaff = await pool.query(
       "SELECT * FROM fieldstaff WHERE username = $1",
@@ -15,8 +15,8 @@ exports.createFieldstaff = async (req, res) => {
       });
     }
     const newFieldstaff = await pool.query(
-      "INSERT INTO fieldstaff(name, date_born, location, username, password, level, id_kantah) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [name, date_born, location, username, password, level, id_kantah]
+      "INSERT INTO fieldstaff(name, date_born, alamat, username, password, level, id_kantah) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [name, date_born, alamat, username, password, level, id_kantah]
     );
 
     res.json(newFieldstaff.rows[0]);
@@ -77,10 +77,10 @@ exports.getFieldstaffKantah = async (req, res) => {
 exports.updateFieldstaff = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, date_born, location, username } = req.body;
+    const { name, date_born, alamat, username } = req.body;
     const updateFieldstaff = await pool.query(
-      "UPDATE fieldstaff SET name = $1, date_born = $2, location = $3, username = $4, WHERE id = $5",
-      [name, date_born, location, username, id]
+      "UPDATE fieldstaff SET name = $1, date_born = $2, alamat = $3, username = $4, WHERE id = $5",
+      [name, date_born, alamat, username, id]
     );
 
     res.json("Fieldstaff Was Updated");
